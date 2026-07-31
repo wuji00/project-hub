@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ai匠坞 · AJW.CN Project Hub</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://www.ajw.cn/">
+<style>
+:root{
+  --bg:#05070f;
+  --panel:rgba(255,255,255,.045);
+  --panel-strong:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.09);
+  --ink:#eef1ff;
+  --ink-dim:#9aa3c0;
+  --ink-faint:#5c6480;
+  --coral:#ff6b5e; --gold:#f5c445; --cyan:#4dd8e6; --violet:#a78bfa;
+  --lime:#a8e063; --orange:#ff9f45; --blue:#6aa8ff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:var(--violet);color:#05070f}
+
+/* ---------- aurora background ---------- */
+.sky{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.sky .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+.blob.b1{width:56vw;height:56vw;left:-14vw;top:-22vw;background:radial-gradient(circle,#3b2d8f 0%,transparent 65%);animation:drift1 26s ease-in-out infinite alternate}
+.blob.b2{width:44vw;height:44vw;right:-12vw;top:-8vw;background:radial-gradient(circle,#0e5a66 0%,transparent 65%);animation:drift2 32s ease-in-out infinite alternate}
+.blob.b3{width:40vw;height:40vw;left:22vw;bottom:-26vw;background:radial-gradient(circle,#6d2a5e 0%,transparent 65%);animation:drift3 38s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(9vw,7vh) scale(1.12)}}
+@keyframes drift2{to{transform:translate(-8vw,10vh) scale(.9)}}
+@keyframes drift3{to{transform:translate(6vw,-8vh) scale(1.08)}}
+.sky::after{content:"";position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);
+  background-size:120px 120px;opacity:.06}
+@media (prefers-reduced-motion:reduce){
+  .blob{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:rgba(5,7,15,.55);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1240px;height:62px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:760;letter-spacing:.1em;font-size:18px;line-height:1;text-decoration:none;color:var(--ink);white-space:nowrap}
+.brand-mark{position:relative;width:80px;height:26px;flex:0 0 80px;overflow:hidden}
+.brand .orb{position:absolute;right:0;top:2px;width:22px;height:22px;border-radius:50%;
+  background:conic-gradient(from 120deg,var(--cyan),var(--violet),var(--coral),var(--gold),var(--cyan));
+  box-shadow:0 0 18px rgba(77,216,230,.72),0 0 28px rgba(167,139,250,.42);
+  animation:logo-orb-loop 7.2s ease-in-out infinite}
+.brand-letters{position:absolute;inset:0;font-family:ui-rounded,"Arial Rounded MT Bold",-apple-system,BlinkMacSystemFont,sans-serif;font-size:20px;font-weight:850;letter-spacing:.045em;line-height:26px;color:#f7f8ff;text-shadow:0 0 14px rgba(77,216,230,.28)}
+.brand-letter{position:absolute;opacity:0;transform:translateX(24px) scale(.82);filter:blur(3px);animation-duration:7.2s;animation-timing-function:cubic-bezier(.2,.9,.25,1.16);animation-iteration-count:infinite}
+.logo-a{left:0;animation-name:logo-a-loop}.logo-j{left:19px;animation-name:logo-j-loop}.logo-w{left:35px;animation-name:logo-w-loop}
+.logo-domain{left:54px;font-size:11px;font-weight:780;letter-spacing:.04em;animation-name:logo-domain-loop}
+.brand-name{display:inline-block}
+.brand small{font-weight:500;color:var(--ink-dim);letter-spacing:.18em;font-size:12px}
+@keyframes logo-orb-loop{0%,34%{opacity:1;transform:translateY(0) scale(1);filter:saturate(1)}16%{transform:translateY(-1px) scale(1.08);filter:saturate(1.25)}45%,79%{opacity:0;transform:translateX(15px) scale(.28);filter:blur(2px)}90%{opacity:1;transform:translateX(0) scale(1.08);filter:saturate(1.25)}100%{opacity:1;transform:translateY(0) scale(1);filter:saturate(1)}}
+@keyframes logo-a-loop{0%,35%{opacity:0;transform:translateX(24px) scale(.82);filter:blur(3px)}43%,73%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}82%,100%{opacity:0;transform:translateX(-20px) scale(.82);filter:blur(3px)}}
+@keyframes logo-j-loop{0%,39%{opacity:0;transform:translateX(24px) scale(.82);filter:blur(3px)}47%,73%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}82%,100%{opacity:0;transform:translateX(-20px) scale(.82);filter:blur(3px)}}
+@keyframes logo-w-loop{0%,43%{opacity:0;transform:translateX(24px) scale(.82);filter:blur(3px)}51%,73%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}82%,100%{opacity:0;transform:translateX(-20px) scale(.82);filter:blur(3px)}}
+@keyframes logo-domain-loop{0%,47%{opacity:0;transform:translateX(24px) scale(.82);filter:blur(3px)}55%,73%{opacity:1;transform:translateX(0) scale(1);filter:blur(0)}82%,100%{opacity:0;transform:translateX(-20px) scale(.82);filter:blur(3px)}}
+.nav-links{display:flex;gap:28px;font-size:15px}
+.nav-links a{color:var(--ink);font-weight:650;text-decoration:none;letter-spacing:.1em;transition:color .2s}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--ink)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:4px}
+@media(max-width:640px){
+  .nav-in{padding:0 16px}
+  .nav-links{display:none}
+  .brand{gap:8px;font-size:17px;letter-spacing:.08em}
+  .brand-mark{width:67px;height:24px;flex-basis:67px}
+  .brand .orb{top:2px;width:20px;height:20px}
+  .brand-letters{font-size:17px;line-height:24px}
+  .logo-a{left:0}.logo-j{left:16px}.logo-w{left:30px}
+  .logo-domain{left:45px;font-size:10px;line-height:24px}
+  .brand small{font-size:9.5px;letter-spacing:.13em}
+}
+
+/* ---------- hero ---------- */
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+.hero{padding:96px 0 72px;position:relative}
+.hero .eyebrow{font-size:12px;letter-spacing:.34em;color:var(--cyan);text-transform:uppercase;margin-bottom:26px;display:flex;align-items:center;gap:12px}
+.hero .eyebrow::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+.hero h1{font-size:clamp(44px,7.2vw,96px);line-height:1.06;font-weight:800;letter-spacing:-.01em;max-width:14ch}
+.hero h1 .glow{
+  background:linear-gradient(100deg,var(--cyan) 0%,var(--violet) 45%,var(--coral) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 26px rgba(120,110,255,.35))}
+.hero p.lede{margin-top:26px;max-width:46ch;color:var(--ink-dim);font-size:16px;line-height:1.9}
+.cta-row{margin-top:38px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;
+  font-size:14px;font-weight:600;text-decoration:none;letter-spacing:.06em;transition:transform .2s,box-shadow .2s;border:1px solid transparent}
+.btn-primary{background:linear-gradient(100deg,var(--cyan),var(--violet));color:#05070f;box-shadow:0 8px 30px rgba(110,130,255,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(110,130,255,.55)}
+.btn-ghost{border-color:var(--line);color:var(--ink);background:var(--panel)}
+.btn-ghost:hover{transform:translateY(-2px);background:var(--panel-strong)}
+.stats{margin-top:64px;display:flex;gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+  background:var(--panel);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);max-width:560px}
+.stat{flex:1;padding:22px 24px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-size:34px;font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(180deg,#fff,#9aa3c0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:11px;letter-spacing:.22em;color:var(--ink-faint);text-transform:uppercase}
+
+/* ---------- section head ---------- */
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:40px 0 28px}
+.sec-head h2{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.01em}
+.sec-head .note{max-width:34ch;color:var(--ink-faint);font-size:13px;line-height:1.8}
+
+/* ---------- controls ---------- */
+.controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:30px}
+.pills{display:flex;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px;backdrop-filter:blur(10px)}
+.pill{border:none;background:transparent;color:var(--ink-dim);font-size:13px;padding:8px 18px;border-radius:999px;cursor:pointer;letter-spacing:.05em;transition:all .2s}
+.pill:hover{color:var(--ink)}
+.pill[aria-pressed="true"]{background:linear-gradient(100deg,var(--cyan),var(--violet));color:#05070f;font-weight:700}
+.pill em{font-style:normal;opacity:.75;margin-left:5px;font-size:11px}
+.search{flex:1;min-width:220px;position:relative}
+.search input{width:100%;padding:13px 18px 13px 44px;border-radius:999px;border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);font-size:14px;backdrop-filter:blur(10px);transition:border-color .2s}
+.search input::placeholder{color:var(--ink-faint)}
+.search input:focus{border-color:var(--cyan);outline:none;box-shadow:0 0 0 3px rgba(77,216,230,.15)}
+.search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);opacity:.5}
+
+/* ---------- bento grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;padding-bottom:20px}
+.card{position:relative;border-radius:22px;border:1px solid var(--line);background:var(--panel);
+  overflow:hidden;display:flex;flex-direction:column;transition:transform .3s,border-color .3s,box-shadow .3s;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.card:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--acc) 55%,transparent);
+  box-shadow:0 20px 60px -20px color-mix(in srgb,var(--acc) 45%,transparent)}
+.card.span3{grid-column:span 3}.card.span4{grid-column:span 4}.card.span2{grid-column:span 2}
+.card .art{position:relative;aspect-ratio:16/8.5;overflow:hidden}
+.card.span4 .art{aspect-ratio:16/9}
+.card .art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.card:hover .art img{transform:scale(1.05)}
+.card .art::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(5,7,15,.85) 100%)}
+.statuses{position:absolute;top:14px;right:14px;z-index:2;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.status{display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;letter-spacing:.14em;padding:6px 12px;border-radius:999px;
+  background:rgba(5,7,15,.55);border:1px solid var(--line);backdrop-filter:blur(8px)}
+.status .dot{width:7px;height:7px;border-radius:50%}
+.status.online .dot{background:#57e88b;box-shadow:0 0 8px #57e88b;animation:pulse 2.4s infinite}
+.status.building .dot{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.status.online .dot{animation:none}.card .art img{transition:none}}
+.card .body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card .mark{font-size:10px;letter-spacing:.3em;color:var(--acc);font-weight:700}
+.card h3{font-size:20px;font-weight:800}
+.card.span4 h3{font-size:24px}
+.card .kind{color:var(--ink-faint);font-size:12px;letter-spacing:.08em}
+.card .summary{color:var(--ink-dim);font-size:13.5px;line-height:1.75}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:4px}
+.tag{font-size:11px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);color:var(--ink-dim);background:rgba(255,255,255,.03)}
+.actions{display:flex;gap:10px;padding-top:8px;border-top:1px solid var(--line)}
+.actions a,.actions span.na{flex:1;text-align:center;font-size:13px;font-weight:600;padding:11px 0;border-radius:12px;text-decoration:none;letter-spacing:.05em;transition:all .2s}
+.actions a.open{background:color-mix(in srgb,var(--acc) 88%,#000);color:#05070f}
+.actions a.open:hover{filter:brightness(1.12)}
+.actions a.repo{border:1px solid var(--line);color:var(--ink)}
+.actions a.repo:hover{background:var(--panel-strong)}
+.actions span.na{color:var(--ink-faint);border:1px dashed var(--line);font-weight:400;cursor:not-allowed}
+.empty{display:none;text-align:center;padding:80px 20px;color:var(--ink-faint);border:1px dashed var(--line);border-radius:22px;font-size:14px;letter-spacing:.06em}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);margin-top:70px;padding:34px 0;color:var(--ink-faint);font-size:12px;letter-spacing:.14em}
+.foot-in{max-width:1240px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer a{color:var(--ink-dim);text-decoration:none}
+footer a:hover{color:var(--ink)}
+
+/* ---------- responsive ---------- */
+@media(max-width:960px){
+  .card.span4,.card.span3,.card.span2{grid-column:span 6}
+  .card .art{aspect-ratio:16/9}
+}
+@media(max-width:640px){
+  .hero{padding:60px 0 48px}
+  .stats{flex-direction:column}
+  .stat{border-right:none;border-bottom:1px solid var(--line)}
+  .stat:last-child{border-bottom:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .brand .orb{display:none}
+  .brand-letter{opacity:1;transform:none;filter:none;animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+</div>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#" aria-label="Ai匠坞 · AJW.CN Project Hub">
+      <span class="brand-mark" aria-hidden="true"><span class="orb"></span><span class="brand-letters"><span class="brand-letter logo-a">A</span><span class="brand-letter logo-j">J</span><span class="brand-letter logo-w">W</span><span class="brand-letter logo-domain">.CN</span></span></span>
+      <span class="brand-name">Ai匠坞</span><small>/ AJW.CN PROJECT HUB</small>
+    </a>
+    <div class="nav-links">
+      <a href="#projects">项目索引</a>
+      <a href="https://github.com/rsagacom" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow">Ai匠坞 · AJW.CN Project Hub · 2026</div>
+  <h1>每个想法，<br>都有<span class="glow">一束光</span>的入口。</h1>
+  <p class="lede">从语音冒险到宠物翻译，从模型榜单到世界共建 —— 这里是 Ai匠坞正在运行、正在生长的产品现场，每个入口都通向一个真实可打开的产品和它的源码。</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#projects">探索项目 ↓</a>
+    <a class="btn btn-ghost" href="https://github.com/rsagacom" target="_blank" rel="noopener">GitHub 组织 ↗</a>
+  </div>
+  <div class="stats" role="list">
+    <div class="stat" role="listitem"><b>06</b><span>在线 Online</span></div>
+    <div class="stat" role="listitem"><b>03</b><span>开发中 Building</span></div>
+    <div class="stat" role="listitem"><b>08</b><span>项目 Projects</span></div>
+  </div>
+</header>
+
+<main class="wrap" id="projects">
+  <div class="sec-head">
+    <h2>项目索引</h2>
+    <p class="note">“在线”为最近一次公网复核记录（2026-07-29），非永久健康保证。开发中项目不提供入口。</p>
+  </div>
+  <div class="controls" role="group" aria-label="项目筛选与搜索">
+    <div class="pills" role="group" aria-label="按状态筛选">
+      <button class="pill" data-filter="all" aria-pressed="true">全部<em>08</em></button>
+      <button class="pill" data-filter="online" aria-pressed="false">在线<em>06</em></button>
+      <button class="pill" data-filter="building" aria-pressed="false">开发中<em>03</em></button>
+    </div>
+    <div class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa3c0" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="q" placeholder="搜索项目名、类型或功能标签…" aria-label="搜索项目">
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">没有找到匹配的项目 —— 换个关键词，或清除筛选试试。</div>
+</main>
+
+<footer>
+  <div class="foot-in">
+    <span>Ai匠坞 / AJW.CN PROJECT HUB · AURORA</span>
+    <span>产品入口与公开源码状态复核 · 2026-07-31</span>
+  </div>
+</footer>
+
+<script>
+const PROJECTS = [
+  {id:"voice",name:"声境TRPG",english:"VOICE REALM",kind:"多模态角色扮演",url:"https://voice.ajw.cn",hideProductLink:true,repo:"https://github.com/rsagacom/rsaga-trpg-bot",status:"online",mark:"VOICE",accent:"var(--coral)",art:"assets/voice-realm.png",span:4,alt:"麦克风、声波、骰子和漫画卷轴组成的语音冒险插画",summary:"让语音、文字与图片一起进入一场会回应你的冒险。",functions:["语音输入 / ASR","多角色对话","情感 TTS","剧情漫画背景"]},
+  {id:"rank",name:"大模型修仙榜",english:"MODEL RANK",kind:"模型评测与榜单",url:"https://top.ajw.cn",repo:"",status:"online",mark:"RANK",accent:"var(--gold)",art:"assets/model-rank.png",span:2,alt:"星空下的修炼山、晶体和阶梯，表达模型排名层级",summary:"把分散的模型评测来源，整理成一张可追溯的修仙榜。",functions:["多源聚合","历史排名","版本追踪","榜单可视化"]},
+  {id:"map",name:"华夏 AI 活动地图",english:"EVENT MAP",kind:"线下活动发现",url:"https://map.ajw.cn",repo:"https://github.com/rsagacom/huaxia-ai-event-map",status:"online",mark:"MAP",accent:"var(--cyan)",art:"assets/event-map.png",span:2,alt:"中国地图上的城市节点和路线网络插画",summary:"全国 AI 会议、论坛、沙龙与工坊，一张地图看见正在发生的事。",functions:["城市地图","活动筛选","在线提交","AI 内容审核"]},
+  {id:"svg",name:"SVG 排版编辑器",english:"SVG EDITOR",kind:"公众号内容创作",url:"https://svg.ajw.cn",repo:"https://github.com/rsagacom/wx-editor",status:"online",mark:"SVG",accent:"var(--violet)",art:"assets/svg-editor.png",span:2,alt:"纸张、版式、色板和矢量路径组成的排版创作插画",summary:"把一段想法整理成适合公众号发布的视觉文章。",functions:["AI 排版","模板市场","公众号安全样式","PNG 导出"]},
+  {id:"bookmarks",name:"栖页 Smart Bookmark",english:"SMART BOOKMARK",kind:"AI 收藏与整理",url:"https://bookmarks.ajw.cn",repo:"https://github.com/rsagacom/smart-bookmarks",status:"online",mark:"SAVE",accent:"var(--lime)",art:"assets/smart-bookmarks.png",span:2,alt:"散乱网页卡片被整理成树状结构的插画",summary:"真正打开你收藏过的网页，再替你读懂、摘要、打标和归位。",functions:["网页正文抓取","AI 摘要标签","原目录保护","多用户隔离"]},
+  {id:"chat",name:"我和狗蛋儿的家",english:"GOUDANER WORLD",kind:"世界通信与共建",url:"https://chat.ajw.cn",repo:"https://github.com/rsagacom/goudaner-world",status:"online",developing:true,mark:"WORLD",accent:"var(--orange)",art:"assets/lobster-chat.png",span:3,alt:"夜间岛屿城市、桥梁、灯塔和对话灯光的插画",summary:"先聊天，再走进城邦、聚落和共同建设的世界。",functions:["H5 即时通信","居民 / 城主权限","世界广场","TUI 并行客户端"]},
+  {id:"comic",name:"小说转漫画引擎",english:"NOVEL TO COMIC",kind:"小说改编与漫画创作",url:"",repo:"https://github.com/rsagacom/Rsaga-skill",status:"building",mark:"COMIC",accent:"var(--violet)",art:"assets/comic-engine.png",span:3,alt:"古卷展开为水墨漫画分镜，山川与人物从纸页中浮现的插画",summary:"把长篇小说拆成分镜、画格与可交付的漫画页面。",functions:["AI 分镜","多模态审稿","古籍对话框","B5 PDF 排版"]},
+  {id:"pet",name:"AIUI 猫狗叫声翻译器",english:"PET TRANSLATOR",kind:"端侧 AI 交互实验",url:"",repo:"",status:"building",mark:"AIUI",accent:"var(--blue)",art:"assets/pet-translator.png",span:3,alt:"猫、狗、声波和设备组成的宠物声音理解实验插画",summary:"从声音、表情和陪伴场景里，探索人与宠物之间的另一种对话。",functions:["端侧音频理解","宠物声音分类","照片回退","开发中 / 未上线"]}
+];
+
+const grid = document.getElementById("grid");
+const empty = document.getElementById("empty");
+const q = document.getElementById("q");
+let filter = "all";
+
+function render(){
+  const term = q.value.trim().toLowerCase();
+  const list = PROJECTS.filter(p => {
+    const okF = filter === "all" || p.status === filter || (filter === "building" && p.developing);
+    const hay = (p.name + p.english + p.kind + p.summary + p.functions.join(" ")).toLowerCase();
+    return okF && (!term || hay.includes(term));
+  });
+  empty.style.display = list.length ? "none" : "block";
+  grid.innerHTML = list.map(p => `
+    <article class="card span${p.span}" style="--acc:${p.accent}">
+      <div class="art">
+        <img src="${p.art}" alt="${p.alt}" loading="lazy">
+        <div class="statuses">
+          <span class="status ${p.status}"><span class="dot"></span>${p.status === "online" ? "在线" : "开发中"}</span>
+          ${p.developing ? `<span class="status building"><span class="dot"></span>开发中</span>` : ""}
+        </div>
+      </div>
+      <div class="body">
+        <span class="mark">${p.mark} / ${p.english}</span>
+        <h3>${p.name}</h3>
+        <span class="kind">${p.kind}</span>
+        <p class="summary">${p.summary}</p>
+        <div class="tags">${p.functions.map(f => `<span class="tag">${f}</span>`).join("")}</div>
+        <div class="actions">
+          ${p.url && !p.hideProductLink ? `<a class="open" href="${p.url}" target="_blank" rel="noopener">打开产品 ↗</a>` : (p.status === "building" ? `<span class="na">开发中 · 暂无入口</span>` : "")}
+          ${p.repo ? `<a class="repo" href="${p.repo}" target="_blank" rel="noopener">开源地址 ↗</a>` : `<span class="na">源码暂未公开</span>`}
+        </div>
+      </div>
+    </article>`).join("");
+}
+
+document.querySelectorAll(".pill").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".pill").forEach(b => b.setAttribute("aria-pressed", "false"));
+    btn.setAttribute("aria-pressed", "true");
+    filter = btn.dataset.filter;
+    render();
+  });
+});
+q.addEventListener("input", render);
+render();
+</script>
+</body>
+</html>

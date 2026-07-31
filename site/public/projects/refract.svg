@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3d2010"/>
+      <stop offset="0.5" stop-color="#a8601d"/>
+      <stop offset="1" stop-color="#ff9f45"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="#ff9f45" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ff9f45" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <circle cx="400" cy="225" r="160" fill="url(#glow)"/>
+  <text x="400" y="240" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="68" font-weight="800" fill="#1a0a00" text-anchor="middle" letter-spacing="6">REFRACT</text>
+  <text x="400" y="290" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="14" font-weight="600" fill="#3d2010" text-anchor="middle" letter-spacing="8">折光 · 图像编辑（开发中）</text>
+</svg>

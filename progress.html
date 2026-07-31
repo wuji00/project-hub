@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Hub · Live Build Progress</title>
+  <style>
+    /* 极简、留白、衬线 + 等宽 — 与 ajw.cn 同语 */
+    :root{
+      --bg:#f7f6f3; --paper:#ffffff; --ink:#161616; --ink-2:#5a5a5a;
+      --line:#e6e2d8; --accent:#2a6f4a; --warn:#b3541a; --bad:#a02525;
+      --ok:#2a6f4a; --build:#b3541a; --serif:"EB Garamond","Source Serif Pro","Songti SC","Noto Serif SC",Georgia,serif;
+      --sans:"Inter","PingFang SC","Noto Sans SC",-apple-system,BlinkMacSystemFont,sans-serif;
+      --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+    a:hover{border-bottom-color:var(--ink)}
+    .wrap{max-width:880px;margin:0 auto;padding:64px 32px 96px}
+    header{margin-bottom:64px}
+    .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-2);margin-bottom:24px}
+    h1{font-family:var(--serif);font-weight:400;font-size:56px;line-height:1.05;letter-spacing:-0.01em;margin:0 0 16px}
+    h1 em{font-style:italic;color:var(--ink-2)}
+    .lede{font-size:18px;color:var(--ink-2);max-width:60ch;margin:0}
+    .lede code{font-family:var(--mono);font-size:14px;background:transparent;border:1px solid var(--line);padding:1px 6px;border-radius:2px;color:var(--ink)}
+    .meta{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-top:32px;display:flex;gap:24px;flex-wrap:wrap}
+    .meta span b{color:var(--ink);font-weight:500}
+
+    section{margin-top:72px}
+    h2{font-family:var(--serif);font-weight:400;font-size:28px;margin:0 0 24px;letter-spacing:-0.005em}
+    h2 .num{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-right:12px;letter-spacing:0.1em}
+
+    .target{
+      background:var(--paper);border:1px solid var(--line);padding:28px 32px;margin-bottom:24px;
+    }
+    .target h3{font-family:var(--serif);font-weight:400;font-size:20px;margin:0 0 8px}
+    .target p{margin:0 0 8px;color:var(--ink-2);font-size:15px}
+    .target .url{font-family:var(--mono);font-size:12px;color:var(--ink)}
+
+    .unit{border-top:1px solid var(--line);padding:24px 0;display:grid;grid-template-columns:48px 1fr auto;gap:24px;align-items:start}
+    .unit:last-child{border-bottom:1px solid var(--line)}
+    .unit .id{font-family:var(--mono);font-size:11px;color:var(--ink-2);letter-spacing:0.08em;padding-top:4px}
+    .unit h3{font-family:var(--serif);font-weight:400;font-size:22px;margin:0 0 6px}
+    .unit p{margin:0 0 8px;font-size:14px;color:var(--ink-2)}
+    .unit .files{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
+    .unit .files b{color:var(--ink);font-weight:500}
+    .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line);border-radius:2px;white-space:nowrap}
+    .badge.pending{color:var(--ink-2)}
+    .badge.building{color:var(--build);border-color:var(--build)}
+    .badge.review{color:var(--ink)}
+    .badge.passed{color:var(--ok);border-color:var(--ok)}
+    .badge.failed{color:var(--bad);border-color:var(--bad)}
+    .score{font-family:var(--mono);font-size:11px;color:var(--ink-2);margin-top:6px}
+    .score b{color:var(--ink);font-weight:500;font-size:14px}
+
+    .cycle{display:grid;grid-template-columns:64px 1fr;gap:24px;border-top:1px solid var(--line);padding:24px 0}
+    .cycle:last-child{border-bottom:1px solid var(--line)}
+    .cycle .num{font-family:var(--serif);font-size:36px;color:var(--ink-2);line-height:1}
+    .cycle h3{font-family:var(--serif);font-weight:400;font-size:22px;margin:0 0 6px}
+    .cycle p{margin:0 0 8px;font-size:14px;color:var(--ink-2)}
+    .cycle ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--ink-2)}
+    .cycle li{margin:4px 0}
+    .cycle li b{color:var(--ink);font-weight:500}
+
+    .log{font-family:var(--mono);font-size:12px;background:#0e0e0e;color:#d8d4c8;padding:20px 24px;border-radius:2px;max-height:340px;overflow:auto;margin-top:24px}
+    .log .ts{color:#7a7a6a;margin-right:12px}
+    .log .ok{color:#7ec99a}
+    .log .warn{color:#e0a960}
+    .log .bad{color:#e08a8a}
+    .log .dim{color:#7a7a6a}
+
+    footer{margin-top:96px;padding-top:32px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--ink-2);display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="eyebrow">Live Build · 2026-07-31</div>
+      <h1>个人项目集 ·<br><em>与 ajw.cn 盲测到底。</em></h1>
+      <p class="lede">
+        目标：复刻 <code>ajw.cn</code> 的极简、留白、衬线大字、状态过滤与滚动动效。
+        方法：拆成可独立评判的最小单元，单元配 <code>builder</code> + 全新上下文的 <code>judge</code>。
+        循环：judge 拿输出跟 ajw.cn 盲测 → 反馈差距 → 再造。直到盲测赢或叫停。
+      </p>
+      <div class="meta">
+        <span>Target <b>ajw.cn</b></span>
+        <span>Workspace <b>E:/code/minimax-code/project-hub</b></span>
+        <span>Mode <b>builder+judge loop</b></span>
+        <span>Status <b id="overall">initializing</b></span>
+      </div>
+    </header>
+
+    <section>
+      <h2><span class="num">01</span>目标锁定 · ajw.cn</h2>
+      <div class="target">
+        <h3>Ai 匠坞 · AJW.CN Project Hub</h3>
+        <p>极简个人项目集主页。衬线大字 hero、留白排版、三段式数据指标、项目卡片网格、状态筛选、滚动渐显动效。</p>
+        <div class="url">https://ajw.cn</div>
+      </div>
+      <p style="font-size:14px;color:var(--ink-2)">详细视觉/交互/技术 DNA 由 research agent 拆解，落盘到 <code>research/</code>。盲测评分维度 20–30 条。</p>
+    </section>
+
+    <section>
+      <h2><span class="num">02</span>最小单元拆分</h2>
+
+      <div class="unit" data-unit="typography">
+        <div class="id">U-01</div>
+        <div>
+          <h3>字体与排版系统</h3>
+          <p>衬线大字（hero） / 无衬线（正文、按钮） / 等宽（meta）。字号梯度、行高、字距。Google Fonts 加载策略（FOUT/FOIT、display=swap）。</p>
+          <div class="files">target → <b>research/ajw-cn-visual-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="palette">
+        <div class="id">U-02</div>
+        <div>
+          <h3>配色与质感</h3>
+          <p>米白底、墨黑文本、暖灰副文本、状态色（在线 / 开发中）。可能带极淡纹理。背景/前景对比度 ≥ AA。</p>
+          <div class="files">target → <b>research/ajw-cn-visual-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="hero">
+        <div class="id">U-03</div>
+        <div>
+          <h3>Hero · 大字宣言</h3>
+          <p>"每个想法，都有一束光的入口。"  换行节奏、字间呼吸、副标题/CTA。逐字渐入或整段淡入。</p>
+          <div class="files">target → <b>research/ajw-cn-interaction-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="metrics">
+        <div class="id">U-04</div>
+        <div>
+          <h3>数据指标条</h3>
+          <p>"06 在线 / 03 开发中 / 08 项目"  大数字 + 小标签。可能带 count up 动效。</p>
+          <div class="files">target → <b>research/ajw-cn-interaction-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="cards">
+        <div class="id">U-05</div>
+        <div>
+          <h3>项目卡片网格</h3>
+          <p>网格布局、卡片密度、状态徽章、悬停态、点击跳外链。</p>
+          <div class="files">target → <b>research/ajw-cn-visual-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="filter">
+        <div class="id">U-06</div>
+        <div>
+          <h3>状态筛选 + 搜索</h3>
+          <p>"全部 08 / 在线 06 / 开发中 03"  tab 切换 + 关键词过滤。空态文案。</p>
+          <div class="files">target → <b>research/ajw-cn-interaction-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="motion">
+        <div class="id">U-07</div>
+        <div>
+          <h3>滚动动效</h3>
+          <p>IntersectionObserver 触发的渐入、平滑锚点跳转、reduce-motion 兼容。</p>
+          <div class="files">target → <b>research/ajw-cn-interaction-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="responsive">
+        <div class="id">U-08</div>
+        <div>
+          <h3>响应式与可访问性</h3>
+          <p>移动端断点（≤ 640 / 1024）、触控目标 ≥ 44px、prefers-color-scheme、aria 标签。</p>
+          <div class="files">target → <b>research/ajw-cn-visual-dna.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="shell">
+        <div class="id">U-09</div>
+        <div>
+          <h3>外壳：导航 + 锚点 + Footer</h3>
+          <p>顶部 logo+导航、GitHub 外链、Footer 版权+日期。</p>
+          <div class="files">target → <b>research/ajw-cn-source.html</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+
+      <div class="unit" data-unit="deploy">
+        <div class="id">U-10</div>
+        <div>
+          <h3>部署与构建</h3>
+          <p>技术栈选型落地、构建产物、CI/CD、域名配置。依据用户回答确定。</p>
+          <div class="files">target → <b>decisions.md</b></div>
+        </div>
+        <div><span class="badge pending">pending</span><div class="score">score —</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">03</span>实时状态 · Plan <code id="plan-id">plan_058d8eee</code></h2>
+      <p style="font-size:14px;color:var(--ink-2)">每 8 秒自动拉取 <code>cycles/cycle-01/status.json</code>。Plan status: <b id="plan-status">running</b> · 当前任务: <b id="current-task">scaffold</b></p>
+
+      <div id="task-board" style="margin-top:16px"></div>
+
+      <h3 style="font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-2);margin:32px 0 12px">循环日志</h3>
+      <div class="log" id="log"></div>
+    </section>
+
+    <section>
+      <h2><span class="num">04</span>盲测进度</h2>
+      <p style="font-size:14px;color:var(--ink-2)">对照 ajw.cn 30 维度，450 分满分。<b style="color:var(--ok)">360 过线</b> · <b style="color:var(--ok)">405 以假乱真</b>。</p>
+      <div id="score-board" style="margin-top:16px;padding:24px 32px;background:var(--paper);border:1px solid var(--line)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+          <span style="font-family:var(--mono);font-size:11px;color:var(--ink-2);letter-spacing:0.1em">CURRENT SCORE</span>
+          <span id="score-value" style="font-family:var(--serif);font-size:48px;font-weight:400;letter-spacing:-0.02em">— / 450</span>
+        </div>
+        <div style="height:6px;background:#e6e2d8;border-radius:3px;overflow:hidden">
+          <div id="score-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--ok),#7ec99a);transition:width 0.6s"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--ink-2)">
+          <span>0</span><span>360 过线</span><span>405 以假乱真</span><span>450</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="num">05</span>循环轮次</h2>
+      <div id="cycles">
+        <div class="cycle">
+          <div class="num">00</div>
+          <div>
+            <h3>预热 · 蓝图</h3>
+            <p>explore 落盘研究材料。orchestrator 落盘单元拆分与评判维度。</p>
+            <ul>
+              <li>✓ 用户三项输入：<b>Next.js 15 + GitHub Pages + ajw.cn 风格占位项目</b></li>
+              <li>✓ research/SUMMARY.md 落盘（5 视觉 DNA + 5 交互 DNA）</li>
+              <li>✓ 30 维度盲测清单就位（450 分，360 过线）</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cycle" data-cycle="01">
+          <div class="num">01</div>
+          <div>
+            <h3>Cycle 01 · 7 任务串行</h3>
+            <p>骨架 → 字体 → Aurora → Hero+Stats → 卡片 → 筛选 → Gate</p>
+            <ul>
+              <li>Plan ID: <b id="plan-id-2">plan_058d8eee</b></li>
+              <li>Workers: <b>general × 6 + verifier × 1</b></li>
+              <li>每 task max_retries 2，verifier 独立跑 playwright 实测</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Project Hub · Live Progress</span>
+      <span>Refresh: <span id="ts">—</span></span>
+    </footer>
+  </div>
+
+  <script>
+    // 自动时间戳
+    const ts = document.getElementById('ts');
+    function tick(){
+      const d = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      ts.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    }
+    tick(); setInterval(tick, 1000);
+
+    // 从 status.json 拉实时状态
+    const BADGE_LABEL = { pending: 'pending', running: 'building', done: 'review', passed: 'passed', failed: 'failed', verify_failed: 'review' };
+    const BADGE_CLASS = { pending: 'pending', running: 'building', done: 'review', passed: 'passed', failed: 'failed', verify_failed: 'review' };
+
+    function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    function renderStatus(s){
+      document.getElementById('plan-status').textContent = s.status;
+      document.getElementById('current-task').textContent = s.current_task || '—';
+
+      // 任务看板
+      const board = document.getElementById('task-board');
+      const tasks = Object.values(s.tasks);
+      board.innerHTML = tasks.map(t => {
+        const klass = BADGE_CLASS[t.status] || 'pending';
+        const label = BADGE_LABEL[t.status] || t.status;
+        const score = t.score != null ? `score <b>${t.score}</b>/100` : 'score —';
+        return `<div class="unit" data-task-id="${t.id}">
+          <div class="id">${t.id}</div>
+          <div>
+            <h3>${esc(t.title)}</h3>
+            <p>status: <code>${esc(t.status)}</code> · retries: ${t.retries}</p>
+          </div>
+          <div><span class="badge ${klass}">${label}</span><div class="score">${score}</div></div>
+        </div>`;
+      }).join('');
+
+      // 日志
+      const log = document.getElementById('log');
+      log.innerHTML = s.log.slice(-30).reverse().map(e => {
+        const cls = { ok:'ok', warn:'warn', bad:'bad', dim:'dim' }[e.level] || 'dim';
+        return `<div><span class="ts">${e.ts}</span><span class="${cls}">${esc(e.msg)}</span></div>`;
+      }).join('');
+
+      // 盲测分数
+      const bt = s.blind_test;
+      const pct = Math.min(100, (bt.current_score / bt.max_score) * 100);
+      document.getElementById('score-value').textContent = `${bt.current_score} / ${bt.max_score}`;
+      document.getElementById('score-bar').style.width = `${pct}%`;
+      if (bt.current_score >= bt.win_line) {
+        document.getElementById('score-value').style.color = 'var(--ok)';
+      } else if (bt.current_score >= bt.pass_line) {
+        document.getElementById('score-value').style.color = 'var(--ok)';
+      } else if (bt.current_score > 0) {
+        document.getElementById('score-value').style.color = 'var(--warn)';
+      }
+    }
+
+    async function poll(){
+      try {
+        const r = await fetch('cycles/cycle-01/status.json?t=' + Date.now());
+        if (r.ok) {
+          const s = await r.json();
+          renderStatus(s);
+        }
+      } catch (e) { /* network blip, ignore */ }
+    }
+    poll();
+    setInterval(poll, 8000);
+
+    // 暴露给 orchestrator 的更新 API
+    window.PH_update = function(unitId, status, score){
+      const el = document.querySelector(`[data-unit="${unitId}"]`);
+      if(!el) return;
+      const badge = el.querySelector('.badge');
+      badge.className = `badge ${status}`;
+      badge.textContent = status;
+      if(score !== undefined){
+        el.querySelector('.score').innerHTML = `score <b>${score}</b>/10`;
+      }
+    };
+    window.PH_log = function(msg, level='dim'){
+      const log = document.getElementById('log');
+      const d = new Date();
+      const pad = n => String(n).padStart(2,'0');
+      const t = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      log.insertAdjacentHTML('afterbegin', `<div><span class="ts">${t}</span><span class="${level}">${msg}</span></div>`);
+    };
+  </script>
+</body>
+</html>
