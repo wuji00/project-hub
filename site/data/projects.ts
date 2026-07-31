@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     span: 4,
     summary: "一个不靠厂商公关稿的模型评测场。从事实性、推理、代码到中文写作，6 个维度、320 题全公开测试集，每周更新一次。",
     functions: ["评测", "模型", "中文", "开源", "周更"],
-    art: "/projects/aurora.svg",
+    art: "projects/aurora.svg",
     alt: "极光 · 模型评测与榜单的渐变封面",
   },
   {
@@ -53,7 +53,7 @@ export const PROJECTS: Project[] = [
     span: 2,
     summary: "把会议室里最常被淹没的声音放大。10 人以下的小房间，端到端延迟压在 180ms 内。",
     functions: ["WebRTC", "语音", "低延迟", "PWA"],
-    art: "/projects/echo.svg",
+    art: "projects/echo.svg",
     alt: "回声 · 实时语音社交的渐变封面",
   },
   {
@@ -69,7 +69,7 @@ export const PROJECTS: Project[] = [
     span: 3,
     summary: "哼一段、敲几拍、丢一句中文歌词，给你一首带人声的完整歌曲。模型权重开源，可商用。",
     functions: ["音乐", "人声", "开源", "可商用"],
-    art: "/projects/rhythm.svg",
+    art: "projects/rhythm.svg",
     alt: "律动 · AI 音乐生成的渐变封面",
   },
   {
@@ -85,7 +85,7 @@ export const PROJECTS: Project[] = [
     span: 3,
     summary: "从公众号长文到小红书短文，从论文摘要到工作邮件。理解中文语气的 12 个细微维度，给出可解释的修改建议。",
     functions: ["写作", "中文", "语气", "可解释"],
-    art: "/projects/inkstone.svg",
+    art: "projects/inkstone.svg",
     alt: "砚台 · 中文写作助手的渐变封面",
   },
   {
@@ -101,7 +101,7 @@ export const PROJECTS: Project[] = [
     span: 2,
     summary: "把笔记、聊天记录、PDF、网页揉成一张可编辑的知识网。",
     functions: ["图谱", "协作", "导入", "检索"],
-    art: "/projects/weave.svg",
+    art: "projects/weave.svg",
     alt: "织梦 · 知识图谱协作的渐变封面",
   },
   {
@@ -118,7 +118,7 @@ export const PROJECTS: Project[] = [
     span: 4,
     summary: "在浏览器里把 CSV 拖进去，3 分钟得到一份可发表的可视化报告。所有图表都是可声明的、可重放的、可嵌入的。",
     functions: ["可视化", "CSV", "报告", "嵌入"],
-    art: "/projects/prism.svg",
+    art: "projects/prism.svg",
     alt: "棱镜 · 数据可视化 IDE 的渐变封面",
   },
   {
@@ -134,7 +134,7 @@ export const PROJECTS: Project[] = [
     span: 3,
     summary: "用自然语言精修图片中的局部元素，光照、视角、材质都保持一致。预计 2026 Q4 公测。",
     functions: ["图像", "编辑", "局部", "多模态"],
-    art: "/projects/refract.svg",
+    art: "projects/refract.svg",
     alt: "折光 · 图像生成的渐变封面（开发中）",
     hideProductLink: true,
   },
@@ -151,7 +151,7 @@ export const PROJECTS: Project[] = [
     span: 3,
     summary: "无限画布 + AI 副驾：你画一半，AI 补另一半。开源协同协议，公测筹备中。",
     functions: ["白板", "协作", "AI", "实时"],
-    art: "/projects/ripple.svg",
+    art: "projects/ripple.svg",
     alt: "涟漪 · 协作白板的渐变封面（开发中）",
     hideProductLink: true,
   },

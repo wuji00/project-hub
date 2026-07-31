@@ -1,32 +1,25 @@
 {
-  "plan_id": "manual-cycle-01",
-  "plan_name": "Project Hub · Cycle 01（orchestrator 接管 scaffold + 实测盲测）",
-  "status": "completed",
-  "completed_at": "2026-07-31T15:08:00+08:00",
+  "plan_id": "manual-cycle-02",
+  "plan_name": "Project Hub · Cycle 02（部署）",
+  "status": "awaiting_user_push",
+  "started_at": "2026-07-31T15:18:00+08:00",
+  "last_check_at": "2026-07-31T15:18:00+08:00",
   "current_task": "—",
   "tasks": {
-    "scaffold": { "id": "scaffold", "title": "骨架 · Next.js 15 + 8 个 demo 项目 + CSS 变量", "status": "passed", "score": 100, "retries": 0, "verifier_pass": true, "note": "orchestrator 接管（worker 10min 超时），用 ~3 分钟补完 9 components + data + 8 SVG + 完整 CSS。build 成功 out/index.html 18,892 bytes。" },
-    "unit-typography": { "id": "unit-typography", "title": "U-01 字体 · 字号梯度 · 字距 · 中文行高", "status": "passed", "score": 50, "retries": 0, "verifier_pass": true },
-    "unit-aurora": { "id": "unit-aurora", "title": "U-02 Aurora 背景 + 圆点网格 + 状态点配色", "status": "passed", "score": 30, "retries": 0, "verifier_pass": true },
-    "unit-hero": { "id": "unit-hero", "title": "U-03 + U-04 Hero 大字 + Stats 三联指标", "status": "passed", "score": 20, "retries": 0, "verifier_pass": true },
-    "unit-cards": { "id": "unit-cards", "title": "U-05 项目卡片 · bento 网格 + 状态徽章 + 项目色阴影", "status": "passed", "score": 20, "retries": 0, "verifier_pass": true, "note": "D2 杀手项实测：阴影 rgb(167,139,250) violet 45% alpha — 项目强调色派生，不是黑色 ✅" },
-    "unit-filter": { "id": "unit-filter", "title": "U-06 状态筛选 pill + 搜索 + ARIA + 减动效", "status": "passed", "score": 20, "retries": 0, "verifier_pass": true },
-    "final-gate": { "id": "final-gate", "title": "最终盲测 gate · 30 维度全跑", "status": "passed", "score": 209, "retries": 0, "verifier_pass": true, "note": "G4 扣 1 分：Next.js 把 CSS 拆到外部文件 (vs 原站全内联 24KB 单文件)。其余 29 维度全 PASS。" }
+    "basePath-fix": { "id": "basePath-fix", "title": "加回 basePath=/project-hub", "status": "passed", "score": 100, "retries": 0, "verifier_pass": true, "note": "rebuild 成功，HTML 引用 /project-hub/_next/...，文件结构正确" },
+    "deploy-yml": { "id": "deploy-yml", "title": ".github/workflows/deploy.yml", "status": "passed", "score": 100, "retries": 0, "verifier_pass": true, "note": "GitHub Actions workflow: push to main → build → deploy to gh-pages" },
+    "readme": { "id": "readme", "title": "README.md 部署说明", "status": "passed", "score": 100, "retries": 0, "verifier_pass": true },
+    "git-init": { "id": "git-init", "title": "git init + 初始 commit", "status": "passed", "score": 100, "retries": 0, "verifier_pass": true, "note": "53 files, 9571 insertions, commit cfc4780 on main branch" },
+    "push-to-github": { "id": "push-to-github", "title": "用户：推送到 GitHub + 启用 Pages", "status": "pending", "score": null, "retries": 0, "verifier_pass": null, "note": "需要用户在 GitHub 上创建 repo 并 push" }
   },
   "log": [
-    { "ts": "14:24", "level": "dim", "msg": "orchestrator 启动 project-hub。读取 ajw.cn 抓取首页。10 个最小单元已定义。" },
-    { "ts": "14:24", "level": "dim", "msg": "explore agent 派出，去扒 ajw.cn 视觉/交互/技术 DNA。" },
-    { "ts": "14:25", "level": "ok", "msg": "explore 落盘 9 个文件：3 截图 + 5 DNA 文档 + 1 源码。30 维度盲测清单就位。" },
-    { "ts": "14:27", "level": "ok", "msg": "用户回答：Next.js 15 + GitHub Pages + ajw.cn 风格占位项目。" },
-    { "ts": "14:30", "level": "ok", "msg": "Plan 启动 plan_058d8eee · 7 任务串行。scaffold 阶段跑起。" },
-    { "ts": "14:50", "level": "warn", "msg": "scaffold task 超时（10 分钟）。70% 已完成。engine 推送 cycle-1 报告。" },
-    { "ts": "14:51", "level": "ok", "msg": "orchestrator 决策：manual_retry，明确告诉 retry agent 跳过 install。" },
-    { "ts": "14:52", "level": "warn", "msg": "engine 因 max_cycles=1 触发 auto-pause。plan 陷入 resume-pause 死循环。" },
-    { "ts": "14:54", "level": "ok", "msg": "orchestrator 取消 plan_058d8eee，亲自接管 scaffold。" },
-    { "ts": "15:00", "level": "ok", "msg": "9 components + data/projects.ts + 8 SVG + 完整 CSS 全部写完。" },
-    { "ts": "15:01", "level": "ok", "msg": "next build 成功，out/index.html 18,892 bytes (~18KB)。" },
-    { "ts": "15:03", "level": "ok", "msg": "用 python http.server + playwright 实测，所有 killer 项命中。" },
-    { "ts": "15:08", "level": "ok", "msg": "30 维度盲测完成：449/450 (99.8%) — 远超 405 以假乱真线 ✅" }
+    { "ts": "15:08", "level": "ok", "msg": "Cycle 1 完成。449/450 (99.8%)。用户选 1：进入部署。" },
+    { "ts": "15:14", "level": "ok", "msg": "加回 basePath=/project-hub，build 成功，HTML 引用 /project-hub/_next/... ✓" },
+    { "ts": "15:15", "level": "ok", "msg": "写 .github/workflows/deploy.yml（GitHub Actions 自动部署）" },
+    { "ts": "15:16", "level": "ok", "msg": "写 README.md + PROGRESS.md" },
+    { "ts": "15:17", "level": "ok", "msg": "清理 scaffold 残留占位文件（app/components/）" },
+    { "ts": "15:18", "level": "ok", "msg": "git init + 53 files commit cfc4780 on main branch" },
+    { "ts": "15:18", "level": "warn", "msg": "等待用户：创建 GitHub repo + push + 启用 Pages" }
   ],
   "blind_test": {
     "current_score": 449,
@@ -38,9 +31,7 @@
         "cycle": 1,
         "score": 449,
         "max": 450,
-        "passed": true,
-        "by_section": { "A_visual": 100, "B_typography": 50, "C_spacing": 50, "D_interaction": 100, "E_responsive": 50, "F_a11y": 50, "G_perf": 49 },
-        "killer_items_passed": ["A3 渐变", "A6 左对齐", "A7 aurora 3 blob", "A8 圆点网格", "A10 绿+金状态点", "B1 零 webfont", "C4 全胶囊", "D2 项目色阴影", "D5 pill 渐变", "D9 无 debounce 搜索"]
+        "passed": true
       }
     ]
   }
